@@ -1,1 +1,187 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about website safety, suspicious links, domains, and cybersecurity.">
+  <title>Link Safety Checker</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b1120;
+      color: #eef2ff;
+      line-height: 1.6;
+    }
+    header {
+      padding: 28px 18px;
+      text-align: center;
+      background: #111c33;
+      border-bottom: 1px solid #334155;
+    }
+    header h1 { color: #60a5fa; margin-bottom: 5px; }
+    nav { margin-top: 18px; }
+    nav a {
+      color: #bfdbfe;
+      margin: 6px 10px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    main { max-width: 900px; margin: auto; padding: 20px; }
+    .card {
+      background: #111c33;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 20px;
+      margin: 18px 0;
+    }
+    input, button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    input {
+      background: #0b1120;
+      color: white;
+      border: 1px solid #64748b;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover { background: #1d4ed8; }
+    .notice { color: #cbd5e1; font-size: 14px; }
+    #result {
+      overflow-wrap: anywhere;
+      margin-top: 15px;
+    }
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #94a3b8;
+      border-top: 1px solid #334155;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛡️ Link Safety Checker</h1>
+    <p>Your starting point for safer browsing and cybersecurity learning.</p>
+    <nav>
+      <a href="#checker">Link Checker</a>
+      <a href="#learn">Learn</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+  <main>
+    <section class="card" id="checker">
+      <h2>🔍 Examine a Website Address</h2>
+      <p>Enter a URL to check for a few common warning signs.</p>
+      <form id="checkForm">
+        <label for="url">Website address</label>
+        <input id="url" type="text"
+          placeholder="https://example.com" required>
+        <button type="submit">Check URL</button>
+      </form>
+      <div id="result" aria-live="polite"></div>
+      <p class="notice">
+        This is a basic format check, not a malware scan or a guarantee
+        that a website is safe. Do not enter passwords or private information.
+      </p>
+    </section>
+    <section class="card" id="learn">
+      <h2>📚 Cybersecurity Learning Center</h2>
+      <h3>What is HTTPS?</h3>
+      <p>HTTPS encrypts the connection between your browser and a website.
+      However, scammers can also use HTTPS, so the padlock alone does
+      not prove a website is trustworthy.</p>
+      <h3>What is a domain?</h3>
+      <p>A domain is the readable name used to reach a website, such as
+      example.com. DNS helps browsers find the relevant server addresses.</p>
+      <h3>How can you spot a suspicious link?</h3>
+      <ul>
+        <li>Look carefully for misspellings in domain names.</li>
+        <li>Be cautious of unexpected requests for money or passwords.</li>
+        <li>Avoid downloading unexpected files.</li>
+        <li>Verify important messages using a separate trusted channel.</li>
+      </ul>
+    </section>
+    <section class="card" id="about">
+      <h2>About This Project</h2>
+      <p>This independent learning project introduces website safety,
+      public domain information, and basic cybersecurity concepts.</p>
+      <p>It does not currently connect to a threat-intelligence service
+      or perform a live security scan.</p>
+    </section>
+  </main>
+  <footer>
+    <p>Link Safety Checker · Learn, investigate, stay safe.</p>
+  </footer>
+  <script>
+    const form = document.getElementById("checkForm");
+    const result = document.getElementById("result");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const input = document.getElementById("url").value.trim();
+      let parsed;
+      try {
+        parsed = new URL(input);
+      } catch {
+        result.textContent =
+          "Please enter a complete URL, such as https://example.com.";
+        return;
+      }
+      if (!["http:", "https:"].includes(parsed.protocol)) {
+        result.textContent = "Only HTTP and HTTPS website URLs are supported.";
+        return;
+      }
+      const warnings = [];
+      if (parsed.protocol !== "https:") {
+        warnings.push("This URL uses HTTP rather than HTTPS.");
+      }
+      if (parsed.username || parsed.password) {
+        warnings.push("The URL contains text resembling login credentials.");
+      }
+      if (parsed.hostname.includes("xn--")) {
+        warnings.push("The domain contains an encoded internationalized label.");
+      }
+      if (parsed.hostname.includes("-")) {
+        warnings.push("Check the spelling of the domain carefully.");
+      }
+      result.replaceChildren();
+      const heading = document.createElement("h3");
+      heading.textContent = "Basic URL check";
+      result.appendChild(heading);
+      const domain = document.createElement("p");
+      domain.textContent = "Hostname: " + parsed.hostname;
+      result.appendChild(domain);
+      const message = document.createElement("p");
+      message.textContent = warnings.length
+        ? "Warnings to review:"
+        : "No obvious warning signs were found by these basic checks.";
+      result.appendChild(message);
+      if (warnings.length) {
+        const list = document.createElement("ul");
+        warnings.forEach(function(warning) {
+          const item = document.createElement("li");
+          item.textContent = warning;
+          list.appendChild(item);
+        });
+        result.appendChild(list);
+      }
+      const disclaimer = document.createElement("p");
+      disclaimer.className = "notice";
+      disclaimer.textContent =
+        "This check cannot confirm whether a site is malicious or safe. " +
+        "Verify unfamiliar domains independently.";
+      result.appendChild(disclaimer);
+    });
+  </script>
+</body>
+</html>
