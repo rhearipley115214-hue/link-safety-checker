@@ -1,187 +1,942 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Learn about website safety, suspicious links, domains, and cybersecurity.">
-  <title>Link Safety Checker</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b1120;
-      color: #eef2ff;
-      line-height: 1.6;
-    }
-    header {
-      padding: 28px 18px;
-      text-align: center;
-      background: #111c33;
-      border-bottom: 1px solid #334155;
-    }
-    header h1 { color: #60a5fa; margin-bottom: 5px; }
-    nav { margin-top: 18px; }
-    nav a {
-      color: #bfdbfe;
-      margin: 6px 10px;
-      text-decoration: none;
-      display: inline-block;
-    }
-    main { max-width: 900px; margin: auto; padding: 20px; }
-    .card {
-      background: #111c33;
-      border: 1px solid #334155;
-      border-radius: 14px;
-      padding: 20px;
-      margin: 18px 0;
-    }
-    input, button {
-      width: 100%;
-      padding: 13px;
-      margin-top: 10px;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-    input {
-      background: #0b1120;
-      color: white;
-      border: 1px solid #64748b;
-    }
-    button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:hover { background: #1d4ed8; }
-    .notice { color: #cbd5e1; font-size: 14px; }
-    #result {
-      overflow-wrap: anywhere;
-      margin-top: 15px;
-    }
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #94a3b8;
-      border-top: 1px solid #334155;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="CyberLab AI — ethical cybersecurity learning and public website safety tools.">
+<title>CyberLab AI | Security Lab</title>
+
+<style>
+:root {
+  --bg: #07111f;
+  --panel: #0d1b2b;
+  --panel2: #102338;
+  --blue: #42a5ff;
+  --cyan: #47e3e3;
+  --text: #edf5ff;
+  --muted: #9aafc5;
+  --border: rgba(151,190,225,.15);
+  --green: #4ee6a8;
+  --red: #ff7777;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(28,111,190,.19), transparent 38%),
+    radial-gradient(ellipse at 95% 35%, rgba(26,177,190,.09), transparent 35%),
+    linear-gradient(145deg, #050c17 0%, #091728 48%, #07111f 100%);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+
+a:hover {
+  color: white;
+}
+
+button, input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.container {
+  width: min(1120px, 92%);
+  margin: auto;
+}
+
+/* Navigation */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(5,13,24,.91);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(18px);
+}
+
+.nav {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: .3px;
+}
+
+.logo {
+  width: 39px;
+  height: 39px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: white;
+  background: linear-gradient(135deg, #1674d1, #22c6c6);
+  box-shadow: 0 0 25px rgba(45,157,255,.25);
+}
+
+.brand span {
+  color: var(--cyan);
+}
+
+.nav-links {
+  display: flex;
+  gap: 22px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--green);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(78,230,168,.65);
+}
+
+/* Hero */
+
+.hero {
+  padding: 75px 0 48px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(71,227,227,.22);
+  background: rgba(35,160,190,.08);
+  color: var(--cyan);
+  padding: 7px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(36px, 6vw, 62px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  max-width: 760px;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #54b5ff, #54eee1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+  max-width: 650px;
+  margin-top: 19px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  color: white;
+  font-weight: 650;
+  font-size: 13px;
+  background: var(--panel2);
+}
+
+.btn-primary {
+  border: 0;
+  background: linear-gradient(110deg, #1678dc, #168dba);
+  box-shadow: 0 8px 28px rgba(22,120,220,.2);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.13);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+  margin-top: 40px;
+}
+
+.stat {
+  background: rgba(13,27,43,.72);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 17px;
+}
+
+.stat strong {
+  display: block;
+  font-size: 21px;
+  color: white;
+}
+
+.stat span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Main layout */
+
+section {
+  padding: 25px 0;
+}
+
+.section-heading {
+  margin-bottom: 20px;
+}
+
+.section-heading h2 {
+  font-size: 25px;
+  letter-spacing: -.5px;
+}
+
+.section-heading p {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.card {
+  min-width: 0;
+  padding: 23px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background:
+    linear-gradient(145deg, rgba(17,36,57,.96), rgba(9,23,39,.97));
+  box-shadow: 0 14px 40px rgba(0,0,0,.12);
+}
+
+.card h3 {
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 17px;
+}
+
+.card-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  font-size: 21px;
+  background: rgba(66,165,255,.12);
+  border: 1px solid rgba(66,165,255,.16);
+}
+
+label {
+  display: block;
+  color: #c8d9eb;
+  font-size: 12px;
+  margin: 13px 0 7px;
+}
+
+input {
+  width: 100%;
+  min-width: 0;
+  color: white;
+  background: #071422;
+  border: 1px solid #263c53;
+  padding: 12px 13px;
+  border-radius: 9px;
+  outline: none;
+}
+
+input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(66,165,255,.1);
+}
+
+input::placeholder {
+  color: #71859b;
+}
+
+.action {
+  margin-top: 12px;
+  width: 100%;
+  border: 0;
+  border-radius: 9px;
+  padding: 12px;
+  background: linear-gradient(110deg, #197de0, #148fb7);
+  color: white;
+  font-weight: 700;
+}
+
+.action:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.result {
+  margin-top: 14px;
+  padding: 13px;
+  border-radius: 9px;
+  background: rgba(3,11,20,.65);
+  border: 1px solid var(--border);
+  color: #c8d9eb;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.hidden {
+  display: none;
+}
+
+.tool-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 10px;
+}
+
+.tool-link {
+  display: block;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(5,15,27,.6);
+}
+
+.tool-link strong {
+  display: block;
+  font-size: 13px;
+  color: #e8f4ff;
+}
+
+.tool-link small {
+  display: block;
+  color: var(--muted);
+  margin-top: 3px;
+  font-size: 11px;
+}
+
+.tool-link:hover {
+  border-color: rgba(71,227,227,.45);
+  background: rgba(31,110,145,.12);
+}
+
+.lesson {
+  border-bottom: 1px solid var(--border);
+  padding: 13px 0;
+}
+
+.lesson:last-child {
+  border-bottom: 0;
+}
+
+.lesson strong {
+  font-size: 13px;
+}
+
+.lesson p {
+  margin: 4px 0 0;
+}
+
+.notice {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,190,90,.22);
+  background: rgba(150,100,20,.08);
+  color: #e7d5b1;
+  font-size: 12px;
+  margin: 24px 0 40px;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 700px) {
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    padding-top: 49px;
+  }
+
+  .hero h1 {
+    letter-spacing: -1px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    gap: 8px;
+  }
+
+  .stat {
+    padding: 12px;
+  }
+
+  .stat strong {
+    font-size: 17px;
+  }
+
+  .stat span {
+    font-size: 10px;
+  }
+
+  .card {
+    padding: 19px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    animation: appear .45s ease both;
+  }
+
+  @keyframes appear {
+    from { opacity: 0; transform: translateY(7px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>🛡️ Link Safety Checker</h1>
-    <p>Your starting point for safer browsing and cybersecurity learning.</p>
-    <nav>
-      <a href="#checker">Link Checker</a>
-      <a href="#learn">Learn</a>
-      <a href="#about">About</a>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="brand">
+      <div class="logo">⌘</div>
+      <div>CyberLab <span>AI</span></div>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#scanner">Security tools</a>
+      <a href="#intelligence">Web intelligence</a>
+      <a href="#academy">Academy</a>
     </nav>
-  </header>
-  <main>
-    <section class="card" id="checker">
-      <h2>🔍 Examine a Website Address</h2>
-      <p>Enter a URL to check for a few common warning signs.</p>
-      <form id="checkForm">
-        <label for="url">Website address</label>
-        <input id="url" type="text"
-          placeholder="https://example.com" required>
-        <button type="submit">Check URL</button>
-      </form>
-      <div id="result" aria-live="polite"></div>
-      <p class="notice">
-        This is a basic format check, not a malware scan or a guarantee
-        that a website is safe. Do not enter passwords or private information.
-      </p>
-    </section>
-    <section class="card" id="learn">
-      <h2>📚 Cybersecurity Learning Center</h2>
-      <h3>What is HTTPS?</h3>
-      <p>HTTPS encrypts the connection between your browser and a website.
-      However, scammers can also use HTTPS, so the padlock alone does
-      not prove a website is trustworthy.</p>
-      <h3>What is a domain?</h3>
-      <p>A domain is the readable name used to reach a website, such as
-      example.com. DNS helps browsers find the relevant server addresses.</p>
-      <h3>How can you spot a suspicious link?</h3>
-      <ul>
-        <li>Look carefully for misspellings in domain names.</li>
-        <li>Be cautious of unexpected requests for money or passwords.</li>
-        <li>Avoid downloading unexpected files.</li>
-        <li>Verify important messages using a separate trusted channel.</li>
-      </ul>
-    </section>
-    <section class="card" id="about">
-      <h2>About This Project</h2>
-      <p>This independent learning project introduces website safety,
-      public domain information, and basic cybersecurity concepts.</p>
-      <p>It does not currently connect to a threat-intelligence service
-      or perform a live security scan.</p>
-    </section>
-  </main>
-  <footer>
-    <p>Link Safety Checker · Learn, investigate, stay safe.</p>
-  </footer>
-  <script>
-    const form = document.getElementById("checkForm");
-    const result = document.getElementById("result");
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
-      const input = document.getElementById("url").value.trim();
-      let parsed;
-      try {
-        parsed = new URL(input);
-      } catch {
-        result.textContent =
-          "Please enter a complete URL, such as https://example.com.";
-        return;
-      }
-      if (!["http:", "https:"].includes(parsed.protocol)) {
-        result.textContent = "Only HTTP and HTTPS website URLs are supported.";
-        return;
-      }
-      const warnings = [];
-      if (parsed.protocol !== "https:") {
-        warnings.push("This URL uses HTTP rather than HTTPS.");
-      }
-      if (parsed.username || parsed.password) {
-        warnings.push("The URL contains text resembling login credentials.");
-      }
-      if (parsed.hostname.includes("xn--")) {
-        warnings.push("The domain contains an encoded internationalized label.");
-      }
-      if (parsed.hostname.includes("-")) {
-        warnings.push("Check the spelling of the domain carefully.");
-      }
-      result.replaceChildren();
-      const heading = document.createElement("h3");
-      heading.textContent = "Basic URL check";
-      result.appendChild(heading);
-      const domain = document.createElement("p");
-      domain.textContent = "Hostname: " + parsed.hostname;
-      result.appendChild(domain);
-      const message = document.createElement("p");
-      message.textContent = warnings.length
-        ? "Warnings to review:"
-        : "No obvious warning signs were found by these basic checks.";
-      result.appendChild(message);
-      if (warnings.length) {
-        const list = document.createElement("ul");
-        warnings.forEach(function(warning) {
-          const item = document.createElement("li");
-          item.textContent = warning;
-          list.appendChild(item);
-        });
-        result.appendChild(list);
-      }
-      const disclaimer = document.createElement("p");
-      disclaimer.className = "notice";
-      disclaimer.textContent =
-        "This check cannot confirm whether a site is malicious or safe. " +
-        "Verify unfamiliar domains independently.";
-      result.appendChild(disclaimer);
-    });
-  </script>
+
+    <div class="status">
+      <span class="status-dot"></span>
+      Lab online
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="eyebrow">◆ ETHICAL CYBERSECURITY LABORATORY</div>
+
+    <h1>
+      Understand threats.<br>
+      <span class="gradient-text">Explore the digital world.</span>
+    </h1>
+
+    <p>
+      A learning-focused security dashboard for checking suspicious
+      links, inspecting public DNS records, exploring website intelligence,
+      and building practical cybersecurity skills.
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#scanner">Open security tools →</a>
+      <a class="btn" href="#academy">Explore the academy</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <strong>01</strong>
+        <span>Link analysis tool</span>
+      </div>
+      <div class="stat">
+        <strong>02</strong>
+        <span>Public DNS lookup</span>
+      </div>
+      <div class="stat">
+        <strong>09+</strong>
+        <span>Learning resources</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="scanner">
+    <div class="section-heading">
+      <h2>Security workstation</h2>
+      <p>Tools for learning about public websites and identifying potential warning signs.</p>
+    </div>
+
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-icon">🛡️</div>
+        <h3>Link Safety Inspector</h3>
+        <p>
+          Check a URL for common warning signs. This is a basic local
+          heuristic check, not a malware verdict.
+        </p>
+
+        <label for="urlInput">Website URL</label>
+        <input id="urlInput" type="text"
+          placeholder="https://example.com"
+          autocomplete="url">
+
+        <button class="action" id="checkUrl">Inspect URL</button>
+        <div class="result hidden" id="urlResult" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🌐</div>
+        <h3>Public DNS Explorer</h3>
+        <p>
+          Look up publicly available DNS records through Google's
+          DNS-over-HTTPS service.
+        </p>
+
+        <label for="domainInput">Domain name</label>
+        <input id="domainInput" type="text"
+          placeholder="example.com"
+          autocomplete="off">
+
+        <label for="recordType">Record type</label>
+        <select id="recordType" style="width:100%;padding:12px;background:#071422;color:white;border:1px solid #263c53;border-radius:9px">
+          <option value="A">A — IPv4 address</option>
+          <option value="AAAA">AAAA — IPv6 address</option>
+          <option value="MX">MX — Mail servers</option>
+          <option value="NS">NS — Name servers</option>
+          <option value="TXT">TXT — Text records</option>
+        </select>
+
+        <button class="action" id="checkDns">Look up DNS</button>
+        <div class="result hidden" id="dnsResult" aria-live="polite"></div>
+      </article>
+
+      <article class="card" id="intelligence">
+        <div class="card-icon">🔎</div>
+        <h3>Website Intelligence</h3>
+        <p>
+          Open established third-party services to research a public
+          website. External services have their own policies.
+        </p>
+
+        <label for="intelDomain">Domain or URL</label>
+        <input id="intelDomain" type="text"
+          placeholder="example.com">
+
+        <button class="action" id="openIntel">Open research tools</button>
+        <div class="result hidden" id="intelResult" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">📚</div>
+        <h3>Trusted Online Tools</h3>
+        <p>Explore established services for website analysis and ethical security training.</p>
+
+        <div class="tool-list">
+          <a class="tool-link" href="https://www.virustotal.com/" target="_blank" rel="noopener noreferrer">
+            <strong>VirusTotal ↗</strong>
+            <small>File and URL reputation</small>
+          </a>
+
+          <a class="tool-link" href="https://urlscan.io/" target="_blank" rel="noopener noreferrer">
+            <strong>URLScan ↗</strong>
+            <small>Website behavior reports</small>
+          </a>
+
+          <a class="tool-link" href="https://crt.sh/" target="_blank" rel="noopener noreferrer">
+            <strong>Certificate Search ↗</strong>
+            <small>Public TLS certificates</small>
+          </a>
+
+          <a class="tool-link" href="https://www.ssllabs.com/ssltest/" target="_blank" rel="noopener noreferrer">
+            <strong>SSL Labs ↗</strong>
+            <small>TLS configuration tests</small>
+          </a>
+
+          <a class="tool-link" href="https://portswigger.net/web-security" target="_blank" rel="noopener noreferrer">
+            <strong>Web Security Academy ↗</strong>
+            <small>Free security labs</small>
+          </a>
+
+          <a class="tool-link" href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener noreferrer">
+            <strong>OWASP Top 10 ↗</strong>
+            <small>Common web risks</small>
+          </a>
+
+          <a class="tool-link" href="https://tryhackme.com/" target="_blank" rel="noopener noreferrer">
+            <strong>TryHackMe ↗</strong>
+            <small>Guided training rooms</small>
+          </a>
+
+          <a class="tool-link" href="https://securityheaders.com/" target="_blank" rel="noopener noreferrer">
+            <strong>Security Headers ↗</strong>
+            <small>HTTP header analysis</small>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="academy">
+    <div class="section-heading">
+      <h2>Cybersecurity Academy</h2>
+      <p>Start with the fundamentals and practise only in environments where you have permission.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="card-icon">🎓</div>
+        <h3>Learning pathway</h3>
+
+        <div class="lesson">
+          <strong>01. Networking basics</strong>
+          <p>Learn IP addresses, DNS, HTTP, HTTPS, ports, and how browsers connect to websites.</p>
+        </div>
+
+        <div class="lesson">
+          <strong>02. Web security</strong>
+          <p>Understand authentication, session security, access control, and common web vulnerabilities.</p>
+        </div>
+
+        <div class="lesson">
+          <strong>03. Linux and command line</strong>
+          <p>Learn files, permissions, processes, and basic terminal commands.</p>
+        </div>
+
+        <div class="lesson">
+          <strong>04. Ethical penetration testing</strong>
+          <p>Practise in legal training labs and document findings responsibly.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🤖</div>
+        <h3>CyberLab Learning Assistant</h3>
+        <p>
+          Ask a beginner question. This demonstration uses built-in
+          responses; it is not connected to a live AI service.
+        </p>
+
+        <label for="question">Your question</label>
+        <input id="question" type="text"
+          placeholder="What is DNS?">
+
+        <button class="action" id="askButton">Ask CyberLab</button>
+        <div class="result hidden" id="answer" aria-live="polite"></div>
+      </article>
+    </div>
+
+    <div class="notice">
+      <strong>Responsible-use notice:</strong>
+      CyberLab AI is an educational interface. Its URL inspector uses
+      simple warning-sign checks and cannot confirm that a website is
+      safe or malicious. DNS lookups use a public DNS service.
+      Third-party tools operate independently. Only test systems you
+      own or have explicit permission to assess. Never enter passwords,
+      private keys, bank details, or confidential information into
+      suspicious websites or public analysis services.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© 2026 CyberLab AI · Ethical security education</span>
+    <span>Learn responsibly. Protect the digital world.</span>
+  </div>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function showResult(id, message) {
+  const box = $(id);
+  box.textContent = message;
+  box.classList.remove("hidden");
+}
+
+function validUrl(value) {
+  try {
+    const url = new URL(value);
+    if (!["http:", "https:"].includes(url.protocol)) return null;
+    if (!url.hostname.includes(".")) return null;
+    return url;
+  } catch {
+    return null;
+  }
+}
+
+/* Basic local URL warning-sign inspector.
+   This is not a real malware scanner. */
+
+$("checkUrl").addEventListener("click", () => {
+  const raw = $("urlInput").value.trim();
+  let value = raw;
+
+  if (!/^https?:\/\//i.test(value)) {
+    value = "https://" + value;
+  }
+
+  const url = validUrl(value);
+
+  if (!url) {
+    showResult("urlResult", "Please enter a valid website address, such as https://example.com");
+    return;
+  }
+
+  const warnings = [];
+  const hostname = url.hostname.toLowerCase();
+
+  if (url.protocol !== "https:") {
+    warnings.push("The URL uses HTTP rather than HTTPS.");
+  }
+
+  if (hostname.startsWith("xn--") || hostname.includes(".xn--")) {
+    warnings.push("The domain contains internationalized/punycode text. Verify the spelling carefully.");
+  }
+
+  if (hostname.split(".").length > 5) {
+    warnings.push("The hostname contains many subdomains. Check that you are on the intended website.");
+  }
+
+  if (url.username || url.password) {
+    warnings.push("The URL contains user-information fields before the hostname.");
+  }
+
+  if (url.hostname.match(/^\d{1,3}(\.\d{1,3}){3}$/)) {
+    warnings.push("The address uses an IP address instead of a regular domain name.");
+  }
+
+  if (url.href.length > 180) {
+    warnings.push("The URL is unusually long. Check for misleading or unnecessary parameters.");
+  }
+
+  const suspiciousWords = [
+    "verify-account", "secure-login", "free-gift",
+    "wallet-connect", "password-reset"
+  ];
+
+  if (suspiciousWords.some(word => url.href.toLowerCase().includes(word))) {
+    warnings.push("The URL contains wording sometimes used in deceptive links. Verify independently.");
+  }
+
+  let output = "URL: " + url.href + "\n\n";
+
+  if (warnings.length) {
+    output += "CAUTION — warning signs found:\n";
+    output += warnings.map((w, i) => (i + 1) + ". " + w).join("\n");
+  } else {
+    output += "No obvious warning signs were detected by these basic checks.\n";
+    output += "This does NOT mean the website is safe.";
+  }
+
+  output += "\n\nFor a broader reputation check, consider VirusTotal or URLScan.";
+  showResult("urlResult", output);
+});
+
+/* Public DNS lookup */
+
+$("checkDns").addEventListener("click", async () => {
+  let domain = $("domainInput").value.trim()
+    .replace(/^https?:\/\//i, "")
+    .split("/")[0];
+
+  const type = $("recordType").value;
+
+  if (!domain || domain.includes(" ") || !domain.includes(".")) {
+    showResult("dnsResult", "Enter a valid domain name, such as example.com");
+    return;
+  }
+
+  $("checkDns").disabled = true;
+  $("checkDns").textContent = "Looking up…";
+
+  try {
+    const endpoint =
+      "https://dns.google/resolve?name=" +
+      encodeURIComponent(domain) +
+      "&type=" + encodeURIComponent(type);
+
+    const response = await fetch(endpoint);
+
+    if (!response.ok) {
+      throw new Error("The DNS service returned HTTP " + response.status);
+    }
+
+    const data = await response.json();
+
+    let output = "Domain: " + domain + "\nRecord type: " + type + "\n\n";
+
+    if (data.Answer && data.Answer.length) {
+      output += data.Answer.map(record =>
+        record.name + "  →  " + record.data + " (TTL " + record.TTL + ")"
+      ).join("\n");
+    } else {
+      output += "No answer records were returned for this query.\n";
+      output += "This does not necessarily mean the domain is malicious or unavailable.";
+      if (data.Comment) output += "\n\n" + data.Comment;
+    }
+
+    showResult("dnsResult", output);
+  } catch (error) {
+    showResult(
+      "dnsResult",
+      "Could not complete the DNS lookup. Check your internet connection and try again.\n\n" +
+      error.message
+    );
+  } finally {
+    $("checkDns").disabled = false;
+    $("checkDns").textContent = "Look up DNS";
+  }
+});
+
+/* Open third-party public website research tools */
+
+$("openIntel").addEventListener("click", () => {
+  const raw = $("intelDomain").value.trim();
+  let value = raw;
+
+  if (!/^https?:\/\//i.test(value)) {
+    value = "https://" + value;
+  }
+
+  const url = validUrl(value);
+
+  if (!url) {
+    showResult("intelResult", "Enter a valid domain or website URL first.");
+    return;
+  }
+
+  const domain = url.hostname;
+
+  const tools = [
+    ["VirusTotal", "https://www.virustotal.com/gui/domain/" + encodeURIComponent(domain)],
+    ["URLScan", "https://urlscan.io/search/#" + encodeURIComponent(domain)],
+    ["Certificate transparency", "https://crt.sh/?q=" + encodeURIComponent(domain)],
+    ["SSL Labs", "https://www.ssllabs.com/ssltest/analyze.html?d=" + encodeURIComponent(domain)]
+  ];
+
+  showResult(
+    "intelResult",
+    "Research links for " + domain + ":\n\n" +
+    tools.map(([name, link]) => name + ": " + link).join("\n\n") +
+    "\n\nThese services are external. Review their privacy policies before submitting sensitive URLs."
+  );
+
+  tools.forEach((tool, index) => {
+    setTimeout(() => {
+      window.open(tool[1], "_blank", "noopener,noreferrer");
+    }, index * 250);
+  });
+});
+
+/* Built-in educational assistant demonstration */
+
+$("askButton").addEventListener("click", () => {
+  const question = $("question").value.trim().toLowerCase();
+
+  if (!question) {
+    showResult("answer", "Type a question first, such as: What is DNS?");
+    return;
+  }
+
+  let response;
+
+  if (question.includes("dns")) {
+    response = "DNS stands for Domain Name System. It helps translate domain names, such as example.com, into IP addresses used by computers to communicate.";
+  } else if (question.includes("phishing")) {
+    response = "Phishing is an attempt to trick people into revealing information or installing harmful software. Check the sender, inspect links carefully, and visit important accounts through their official app or bookmarked address.";
+  } else if (question.includes("https") || question.includes("ssl") || question.includes("tls")) {
+    response = "HTTPS uses TLS to encrypt data sent between a browser and a website. A padlock or HTTPS connection does not prove that the website itself is trustworthy.";
+  } else if (question.includes("ip address")) {
+    response = "An IP address is a numerical address used to identify a device or network interface. IPv4 addresses look like 192.0.2.1, while IPv6 addresses use a longer hexadecimal format.";
+  } else if (question.includes("firewall")) {
+    response = "A firewall filters network traffic according to security rules. It can help restrict unwanted connections, but it is only one layer of security.";
+  } else if (question.includes("ethical hacking") || question.includes("penetration test")) {
+    response = "Ethical hacking means assessing security with explicit authorization and a defined scope. Start with training platforms such as PortSwigger Web Security Academy or TryHackMe.";
+  } else if (question.includes("malware") || question.includes("virus")) {
+    response = "Malware is software designed to cause harm or perform unwanted actions. Keep your software updated, avoid unexpected attachments, use reputable security tools, and maintain backups.";
+  } else if (question.includes("password")) {
+    response = "Use a unique, long password for every account, store it in a reputable password manager, and enable multifactor authentication where available.";
+  } else {
+    response = "This is a simple offline demonstration assistant, not a live AI model. Try asking about DNS, phishing, HTTPS, IP addresses, firewalls, malware, passwords, or ethical hacking.";
+  }
+
+  showResult("answer", response);
+});
+</script>
+
 </body>
 </html>
